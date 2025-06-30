@@ -20,7 +20,7 @@ public class FerramentadeConversao {
                 case 5 -> encerrarAplicacao();
                 default -> System.out.println("Opção inválida\n");
             }
-        } while (opc!=5);
+        } while (opc != 5);
     }
 
     private static void encerrarAplicacao() {
@@ -75,7 +75,7 @@ public class FerramentadeConversao {
     private static void executarIMC() {
         double peso = lerDoubleSafely("Peso: ");
         double altura = lerDoubleSafely("Altura: ");
-        double imc = peso/(altura*altura);
+        double imc = peso / (altura * altura);
 
         String Status = classificarIMC(imc);
 
