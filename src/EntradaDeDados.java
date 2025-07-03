@@ -28,6 +28,11 @@ public class EntradaDeDados {
         }
     }
 
+    public static String lerStringSafely(String s) {
+        System.out.print(s);
+        return SCANNER.nextLine();
+    }
+
     public static void encerrarAplicacao(List<String> HISTORICO) {
         System.out.println("Encerrando a aplicação...");
         if (!HISTORICO.isEmpty()) {
