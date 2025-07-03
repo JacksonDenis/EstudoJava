@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,37 +9,23 @@ public class FerramentadeConversao {
     public static void main(String[] args) {
         int opc;
         do {
-            exibirMenu();
-            opc = lerInteiroSafely("Escolha uma opção: ");
+            exibirMenuConversao();
+            opc = EntradaDeDados.lerInteiroSafely("Escolha uma opção: ");
             switch (opc) {
                 case 1 -> executarConversaoTemperatura();
                 case 2 -> executarIMC();
                 case 3 -> executarBhaskara();
                 case 4 -> executarAreaTriangulo();
-                case 5 -> encerrarAplicacao();
+                case 5 -> EntradaDeDados.encerrarAplicacao(HISTORICO);
                 default -> System.out.println("Opção inválida\n");
             }
-        } while (opc!=5);
-    }
-
-    private static void encerrarAplicacao() {
-        System.out.println("Encerrando a aplicação...");
-        if (!HISTORICO.isEmpty()) {
-            System.out.println("Histórico de cálculos:");
-            for (String registro : HISTORICO) {
-                System.out.println(registro);
-            }
-        } else {
-            System.out.println("Nenhum cálculo foi realizado.");
-        }
-        SCANNER.close();
-        System.exit(0);
+        } while (opc != 5);
     }
 
     private static void executarAreaTriangulo() {
         System.out.println("Vamos calcular a área do triângulo: base × altura / 2");
-        double base = lerDoubleSafely("Entre com o valor da base: ");
-        double altura = lerDoubleSafely("Entre com o valor da altura: ");
+        double base = EntradaDeDados.lerDoubleSafely("Entre com o valor da base: ");
+        double altura = EntradaDeDados.lerDoubleSafely("Entre com o valor da altura: ");
         double area = (base * altura) / 2;
         System.out.printf("A área do triângulo é: %.2f\n\n", area);
         HISTORICO.add(String.format("Área do triângulo: %.2f", area));
@@ -48,9 +33,9 @@ public class FerramentadeConversao {
 
     private static void executarBhaskara() {
         System.out.println("Vamos resolver a equação do segundo grau: ax² + bx + c = 0");
-        double a = lerDoubleSafely("Entre com o valor de a: ");
-        double b = lerDoubleSafely("Entre com o valor de b: ");
-        double c = lerDoubleSafely("Entre com o valor de c: ");
+        double a = EntradaDeDados.lerDoubleSafely("Entre com o valor de a: ");
+        double b = EntradaDeDados.lerDoubleSafely("Entre com o valor de b: ");
+        double c = EntradaDeDados.lerDoubleSafely("Entre com o valor de c: ");
 
         if (a == 0) {
             System.out.println("O valor de 'a' não pode ser zero. Tente novamente.\n");
@@ -73,9 +58,9 @@ public class FerramentadeConversao {
     }
 
     private static void executarIMC() {
-        double peso = lerDoubleSafely("Peso: ");
-        double altura = lerDoubleSafely("Altura: ");
-        double imc = peso/(altura*altura);
+        double peso = EntradaDeDados.lerDoubleSafely("Peso: ");
+        double altura = EntradaDeDados.lerDoubleSafely("Altura: ");
+        double imc = peso / (altura * altura);
 
         String Status = classificarIMC(imc);
 
@@ -93,7 +78,7 @@ public class FerramentadeConversao {
 
     private static void executarConversaoTemperatura() {
         System.out.println("Digite 1 para F -> C ou 2 para C -> F :");
-        int opc = lerInteiroSafely("Sua Escolha: ");
+        int opc = EntradaDeDados.lerInteiroSafely("Sua Escolha: ");
         switch (opc) {
             case 1 -> executarConversaoTemperaturaFC();
             case 2 -> executarConversaoTemperaturaCF();
@@ -103,7 +88,7 @@ public class FerramentadeConversao {
 
     private static void executarConversaoTemperaturaFC() {
         System.out.println("Entre com a temperatura do F: ");
-        double tempF = lerDoubleSafely("F : ");
+        double tempF = EntradaDeDados.lerDoubleSafely("F : ");
         double tempC = (tempF - 32.0) * 5.0 / 9.0;
         System.out.printf("Temperatura: %.2f °F → %.2f °C.\n\n", tempF, tempC);
         HISTORICO.add(String.format("Temperatura: %.2f °F → %.2f °C", tempF, tempC));
@@ -111,38 +96,14 @@ public class FerramentadeConversao {
 
     private static void executarConversaoTemperaturaCF() {
         System.out.println("Entre com a temperatura do C: ");
-        double tempC = lerDoubleSafely("C : ");
+        double tempC = EntradaDeDados.lerDoubleSafely("C : ");
         double tempF = tempC * 9.0 / 5.0 + 32.0;
         System.out.printf("Temperatura: %.2f °C → %.2f °F.\n\n", tempC, tempF);
         HISTORICO.add(String.format("Temperatura: %.2f °C → %.2f °F", tempC, tempF));
 
     }
 
-    private static int lerInteiroSafely(String s) {
-        while (true) {
-            try {
-                System.out.print(s);
-                return SCANNER.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Tente novamente.");
-                SCANNER.nextLine(); // descarta entrada inválida
-            }
-        }
-    }
-
-    private static double lerDoubleSafely(String s) {
-        while (true) {
-            try {
-                System.out.print(s);
-                return SCANNER.nextDouble();
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Tente novamente.");
-                SCANNER.nextLine(); // descarta entrada inválida
-            }
-        }
-    }
-
-    private static void exibirMenu() {
+    private static void exibirMenuConversao() {
         System.out.println("================ Ferramenta Conversora ================");
         System.out.println("1. Temperatura – converter °C ⇄ °F");
         System.out.println("2. IMC – calcular Índice de Massa Corporal");
