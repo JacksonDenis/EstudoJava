@@ -23,6 +23,25 @@ public class ValidadorCPFeOutrasFuncoes {
     }
 
     private static void relatorioVendas() {
+        double total = 0.0;
+        int itens = 0;
+        System.out.println("Digite o valor das vendas (digite 0 para encerrar): ");
+        while (true) {
+            double venda = EntradaDeDados.lerDoubleSafely("Valor da venda: ");
+            if (venda == 0) {
+                break;
+            }
+            if (venda < 0) {
+                System.out.println("Valor inválido. Tente novamente.\n");
+                continue;
+            }
+            total += venda;
+            itens++;
+        }
+        double media = total / itens;
+        System.out.printf("Total de vendas: R$ %.2f%n", total);
+        System.out.printf("Número de itens: %d%n", itens);
+        System.out.printf("Média de vendas: R$ %.2f%n%n", media);
     }
 
     private static void tabuadaFormatada() {
